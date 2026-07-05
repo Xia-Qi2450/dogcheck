@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DOGCHECK</title>
+    <style>
+        @font-face {
+            font-family: Determination;
+            src: url("assets/DeterminationMonoWebRegular-Z5oq.ttf");
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: black;
+            color: white;
+            overflow: hidden;
+
+            font-family: Determination;
+        }
+
+        #dogcheck {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        #media {
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #dog {
+            image-rendering: pixelated;
+            width: 150px;
+            cursor: pointer;
+        }
+
+        #info {
+
+            position: absolute;
+
+            left: 50%;
+            bottom: 5vh;
+
+            transform: translateX(-50%);
+
+            width: min(90vw, 900px);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+        #message {
+
+            font-size: 24px;
+            text-align: center;
+
+        }
+
+        #website,
+        #errorcode {
+
+            font-size: 18px;
+            text-align: center;
+
+        }
+
+        .label {
+
+            margin-bottom: 4px;
+
+        }
+
+        #details {
+            position: absolute;
+
+            left: 50%;
+            bottom: 2vh;
+
+            transform: translateX(-50%);
+
+            width: min(90vw, 900px);
+
+            text-align: center;
+
+            font-size: 18px;
+        }
+
+    </style>
+    
+</head>
+
+<body>
+
+    <div id="dogcheck">
+
+        <div id="media">
+            
+        </div>
+    </div>
+    <div id="info">
+
+        <div id="message"></div>
+
+        <div id="website"></div>
+
+        <div id="errorcode"></div>
+
+    </div>
+
+
+    <script>
+        const media = document.getElementById("media");
+        const message = document.getElementById("message");
+        const website = document.getElementById("website");
+        const errorCode = document.getElementById("errorcode");
+
+        const params = new URLSearchParams(window.location.search);
+        const error = params.get("error") ?? params.get("code");
+        const url = params.get("url");
+        const customMessage = params.get("message");
+
+        const messages = [
+            "* The power of DOGCHECKS shines within you.",
+            "* Despite everything, it is still you.",
+            "* Unhandled exceptions are not your concern.",
+            "* The dog somehow understands your code.",
+            "* The dog is chewing on your CSS.",
+            "* The dog says everything is under control.",
+            "* The dog looks pleased.",
+            "* You feel strangely determined."
+        ];
+        
+        const errorMessages = {
+
+            "400": "The dog doesn't understand what the browser just asked for.",
+            "401": "The dog isn't allowed to enter this webpage.",
+            "403": "The dog was told to stay out of this webpage.",
+            "404": "The dog cannot find the webpage you were asking for.",
+            "408": "The dog waited too long for the webpage to respond.",
+            "409": "The dog had a FIGHT with the webpage.",
+            "410": "The dog found the webpage, but it has been turned to dust.",
+            "411": "The dog needs to know the size of the webpage before it can fetch it.",
+            "412": "The dog was told to fetch the webpage, but it didn't meet the dog's expectations.",
+            "413": "The dog cannot carry such a large webpage.",
+            "414": "The dog cannot carry such a long webpage.",
+            "415": "The dog cannot understand the webpage's format.",
+            "416": "The dog cannot fetch the webpage's requested range.",
+            "417": "The dog cannot meet the webpage's expectations.",
+            "418": "The dog found out that the webpage is a teapot.",
+            "429": "The dog has been asking for webpages too quickly.",
+            "500": "The dog found something broken on the server.",
+            "502": "The dog received a strange response from another server.",
+            "503": "The dog found the server taking a nap.",
+            "504": "The dog waited for another server, but it never replied."
+
+        };
+
+        const errorNames = {
+            "400": "400 Bad Request",
+            "401": "401 Unauthorized",
+            "403": "403 Forbidden",
+            "404": "404 Not Found",
+            "405": "405 Method Not Allowed",
+            "406": "406 Not Acceptable",
+            "407": "407 Proxy Authentication Required",
+            "408": "408 Request Timeout",
+            "409": "409 Conflict",
+            "410": "410 Gone",
+            "411": "411 Length Required",
+            "412": "412 Precondition Failed",
+            "413": "413 Payload Too Large",
+            "414": "414 URI Too Long",
+            "415": "415 Unsupported Media Type",
+            "416": "416 Range Not Satisfiable",
+            "417": "417 Expectation Failed",
+            "418": "418 I'm a teapot",
+            "429": "429 Too Many Requests",
+            "500": "500 Internal Server Error",
+            "503": "503 Service Unavailable",
+            "504": "504 Gateway Timeout",
+            "502": "502 Bad Gateway",
+
+        };
+
+        const chromeErrors = {
+
+            "ERR_NAME_NOT_RESOLVED":
+                "The dog cannot find where the webpage lives.",
+            "ERR_CONNECTION_REFUSED":
+                "The dog knocked on the server's door, but nobody answered.",
+            "ERR_CONNECTION_TIMED_OUT":
+                "The dog waited patiently... but nobody came.",
+            "ERR_INTERNET_DISCONNECTED":
+                "The dog can't smell the Internet anymore.",
+            "ERR_SSL_PROTOCOL_ERROR":
+                "The dog got confused by the website's security certificate.",
+            "ERR_CERT_AUTHORITY_INVALID":
+                "The dog doesn't trust this certificate.",
+            "ERR_ADDRESS_UNREACHABLE":
+                "The dog doesn't know how to reach this address.",
+            "ERR_FILE_NOT_FOUND":
+                "The dog couldn't find that file.",
+            "ERR_ABORTED":
+                "The dog stopped looking for the webpage.",
+            "ERR_BLOCKED_BY_CLIENT":
+                "The dog noticed something blocked the webpage."
+
+        };
+
+        const music = [
+            "assets/dogcheck.ogg",
+            "assets/dogroom.ogg",
+            "assets/dance_of_dog.ogg"
+        ];
+
+        const BARK = "assets/dogbark.ogg";
+
+        const STATE = {
+            DOGCHECK: "dogcheck",
+            PROPHECY: "prophecy"
+        };
+
+        let currentState = STATE.DOGCHECK;
+        const dog = document.createElement("img");
+        dog.addEventListener("click", dogClicked);
+        let bark = new Audio(BARK);
+        let sleepTimer = null;
+        let dogSleeping = false;
+        let audio = new Audio();
+        let musicStarted = false;
+
+        const DOG_GIF = "assets/Annoying_Dog_sprite.gif";
+        const SLEEP_GIF = "assets/Annoying_Dog_overworld_sleeping.gif";
+        const PROPHECY_VIDEO = "assets/annoying_prophecy.mp4";
+        const PROPHECY_CHANCE = 0.05;
+
+        function randomChoice(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function setMessage(custom) {
+            message.textContent = custom || randomChoice(messages);
+        }
+        
+        function generateMessage() {
+
+            if (customMessage)
+                return customMessage;
+            if (error) {
+                if (errorMessages[error])
+                    return "* " + errorMessages[error];
+
+                if (chromeErrors[error])
+                    return "* " + chromeErrors[error];
+            }
+            return randomChoice(messages);
+
+        }
+
+        function populateDetails() {
+
+            if (url) {
+
+                website.innerHTML = "";
+
+                const label = document.createElement("div");
+                label.className = "label";
+                label.textContent = "Website";
+
+                const value = document.createElement("div");
+                value.textContent = decodeURIComponent(url);
+
+                website.append(label, value);
+
+            }
+
+            if (error) {
+
+                errorCode.innerHTML = "";
+
+                const label = document.createElement("div");
+                label.className = "label";
+                label.textContent = "Error";
+
+                const value = document.createElement("div");
+                value.textContent = errorNames[error] || error;
+
+                errorCode.append(label, value);
+
+            }
+
+        }
+
+        function resetSleepTimer() {
+            clearTimeout(sleepTimer);
+
+            sleepTimer = setTimeout(() => {
+
+                putDogToSleep();
+
+            }, 30000);
+        }
+
+        function playRandomMusic() {
+
+            audio.src = randomChoice(music);
+
+            audio.loop = true;
+
+            audio.volume = 0.5;
+
+            audio.play().catch(() => {
+                // Browser blocked autoplay.
+            });
+
+        }
+
+        function startMusic() {
+
+            if (musicStarted)
+                return;
+
+            musicStarted = true;
+
+            playRandomMusic();
+
+        }
+
+        function showProphecy() {
+            audio.volume = 0;
+            media.innerHTML = "";
+
+            const video = document.createElement("video");
+
+            video.src = PROPHECY_VIDEO;
+
+            video.autoplay = true;
+            video.playsInline = true;
+            video.loop = true;
+            video.controls = false;
+
+            video.style.maxWidth = "90vw";
+            video.style.maxHeight = "90vh";
+
+            media.appendChild(video);
+
+            video.play().catch(() => {
+                // Browser blocked autoplay.
+            });
+
+        }
+
+        function showDog() {
+
+            media.innerHTML = "";
+
+            dog.id = "dog";
+            dog.src = DOG_GIF;
+            dog.alt = "Annoying Dog";
+
+            media.appendChild(dog);
+
+        }
+
+        function putDogToSleep() {
+            dogSleeping = true;
+            dog.src = SLEEP_GIF;
+        }
+
+        function wakeDog() {
+            dogSleeping = false;
+            dog.src = DOG_GIF;
+
+            resetSleepTimer();
+        }
+
+        function dogClicked() {
+
+            bark.currentTime = 0;
+            bark.playbackRate = 0.95 + Math.random() * 0.1;
+            bark.play();
+
+            if (dogSleeping)
+                wakeDog();
+            else
+                resetSleepTimer();
+
+        }
+
+        function handleInteraction() {
+
+            if (currentState === STATE.PROPHECY) {
+
+                const video = media.querySelector("video");
+
+                if (video)
+                    video.play();
+
+                return;
+            }
+
+            startMusic();
+
+        }
+
+        function initialize() {
+            populateDetails();
+            setMessage(generateMessage());
+
+            if (Math.random() < PROPHECY_CHANCE){
+                currentState = STATE.PROPHECY;
+                showProphecy();
+            } else {
+                currentState = STATE.DOGCHECK;
+                showDog();
+            }
+        }
+
+        document.addEventListener("pointerdown", handleInteraction);
+        document.addEventListener("keydown", handleInteraction);
+
+        initialize();
+    </script>
+
+</body>
+</html>
