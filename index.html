@@ -202,28 +202,139 @@
 
         };
 
-        const chromeErrors = {
-
+       const chromeErrors = {
+            // DNS: the Internet's phone book has decided to become a cryptid.
             "ERR_NAME_NOT_RESOLVED":
                 "The dog cannot find where the webpage lives.",
+            "ERR_NAME_RESOLUTION_FAILED":
+                "The dog consulted DNS and received only a cryptic bark.",
+            "ERR_DOMAIN_PROBE_FINISHED_NXDOMAIN":
+                "The dog checked the Internet's phone book. This domain is NOT REAL. Probably.",
+            "ERR_DNS_PROBE_FINISHED_NXDOMAIN":
+                "The dog dug all the way to DNS and found absolutely no domain.",
+            "ERR_DNS_PROBE_FINISHED_NO_INTERNET":
+                "The dog checked DNS, checked again, and discovered the Internet had left.",
+            "ERR_DNS_PROBE_FINISHED_BAD_CONFIG":
+                "The dog's DNS settings have achieved a new and exciting form of wrong.",
+            "ERR_DNS_TIMED_OUT":
+                "DNS took so long to answer that the dog has started a new life.",
+            "ERR_CACHED_NAME_NOT_RESOLVED":
+                "Even the cached answer has no idea where this website went.",
+
+            // Connection: knocking on the server's door, repeatedly.
             "ERR_CONNECTION_REFUSED":
                 "The dog knocked on the server's door, but nobody answered.",
             "ERR_CONNECTION_TIMED_OUT":
                 "The dog waited patiently... but nobody came.",
-            "ERR_INTERNET_DISCONNECTED":
-                "The dog can't smell the Internet anymore.",
-            "ERR_SSL_PROTOCOL_ERROR":
-                "The dog got confused by the website's security certificate.",
-            "ERR_CERT_AUTHORITY_INVALID":
-                "The dog doesn't trust this certificate.",
+            "ERR_CONNECTION_RESET":
+                "The server slammed the door in the dog's face.",
+            "ERR_CONNECTION_CLOSED":
+                "The connection closed. The dog was not even allowed to say goodbye.",
+            "ERR_CONNECTION_ABORTED":
+                "The connection rage-quit before the dog could load the page.",
+            "ERR_CONNECTION_FAILED":
+                "The dog failed to establish a connection. Character development arc postponed.",
             "ERR_ADDRESS_UNREACHABLE":
                 "The dog doesn't know how to reach this address.",
+            "ERR_ADDRESS_INVALID":
+                "The dog has determined that this address is, technically, nonsense.",
+            "ERR_NETWORK_CHANGED":
+                "The dog looked away for one second and the network changed universes.",
+            "ERR_INTERNET_DISCONNECTED":
+                "The dog can't smell the Internet anymore.",
+            "ERR_NETWORK_ACCESS_DENIED":
+                "The network told the dog to get off its lawn.",
+            "ERR_TUNNEL_CONNECTION_FAILED":
+                "The dog tried the proxy tunnel. It was, unfortunately, a tunnel-shaped problem.",
+            "ERR_PROXY_CONNECTION_FAILED":
+                "The proxy has ghosted the dog.",
+            "ERR_EMPTY_RESPONSE":
+                "The server sent the dog absolutely nothing. Not even a sympathy bark.",
+            
+            // TLS / certificates: trust issues, but make them cryptographic.
+            "ERR_SSL_PROTOCOL_ERROR":
+                "The dog got confused by the website's security certificate.",
+            "ERR_SSL_VERSION_OR_CIPHER_MISMATCH":
+                "The dog and server cannot agree on a cryptographic handshake. Awkward.",
+            "ERR_CERT_AUTHORITY_INVALID":
+                "The dog doesn't trust this certificate.",
+            "ERR_CERT_COMMON_NAME_INVALID":
+                "The certificate's name tag does not match the website. Suspicious dog behavior.",
+            "ERR_CERT_DATE_INVALID":
+                "The dog's certificate is from the past, the future, or a very bad clock.",
+            "ERR_CERT_REVOKED":
+                "The certificate has been revoked. The dog confiscated its tiny ID card.",
+            "ERR_SSL_PINNED_KEY_NOT_IN_CERT_CHAIN":
+                "The dog expected a specific key and got a whole different keychain.",
+            "ERR_BAD_SSL_CLIENT_AUTH_CERT":
+                "The server asked for ID. The dog presented a chew toy.",
+
+            // Browser, file, and request chaos.
             "ERR_FILE_NOT_FOUND":
                 "The dog couldn't find that file.",
+            "ERR_FILE_EXISTS":
+                "The dog tried to create a file, but it already exists. The file was here first.",
+            "ERR_ACCESS_DENIED":
+                "The dog tried to enter the file and was denied access. No treats for you.",
             "ERR_ABORTED":
                 "The dog stopped looking for the webpage.",
             "ERR_BLOCKED_BY_CLIENT":
-                "The dog noticed something blocked the webpage."
+                "The dog noticed something blocked the webpage.",
+            "ERR_BLOCKED_BY_ADMINISTRATOR":
+                "The administrator has confiscated the dog's Internet privileges.",
+            "ERR_BLOCKED_BY_RESPONSE":
+                "The response blocked itself. The dog respects its commitment to the bit.",
+            "ERR_TOO_MANY_REDIRECTS":
+                "The dog followed redirects in a circle and is now back where it started.",
+            "ERR_INVALID_URL":
+                "The dog has looked at this URL and respectfully declined to parse it.",
+            "ERR_DISALLOWED_URL_SCHEME":
+                "The dog refuses to fetch a URL scheme that looks like it was invented at 3 AM.",
+            "ERR_UNSAFE_PORT":
+                "The dog found a port Chrome considers unsafe. Port 666 was not helping.",
+            "ERR_INVALID_RESPONSE":
+                "The server replied in a language made entirely of question marks.",
+            "ERR_CONTENT_LENGTH_MISMATCH":
+                "The dog counted the bytes. The server's maths does not check out.",
+            "ERR_INCOMPLETE_CHUNKED_ENCODING":
+                "The server sent half a chunk and called it a day.",
+            "ERR_RESPONSE_HEADERS_MULTIPLE_CONTENT_LENGTH":
+                "The server gave the dog two different answers about how long the response is.",
+            "ERR_HTTP2_PROTOCOL_ERROR":
+                "HTTP/2 has entered its experimental jazz era.",
+            "ERR_HTTP2_SERVER_REFUSED_STREAM":
+                "The server refused the stream. The dog will take this personally.",
+            "ERR_QUIC_PROTOCOL_ERROR":
+                "QUIC said 'quick' and then immediately became a debugging session.",
+            "ERR_CACHE_MISS":
+                "The dog checked the cache. The cache checked out.",
+            "ERR_CACHE_READ_FAILURE":
+                "The dog tried to read the cache, but the cache is apparently illiterate.",
+            "ERR_CACHE_WRITE_FAILURE":
+                "The cache refused to remember anything. Relatable.",
+            "ERR_INSUFFICIENT_RESOURCES":
+                "Chrome has run out of resources. The dog recommends closing 47 tabs.",
+            "ERR_OUT_OF_MEMORY":
+                "The browser has run out of memory. The dog would like to forget this happened.",
+            // WebSocket / downloads / miscellaneous suffering.
+            "ERR_WEBSOCKET_PROTOCOL_ERROR":
+                "The WebSocket snapped. The dog has no idea how to knit it back together.",
+            "ERR_UNSAFE_REDIRECT":
+                "The dog was redirected somewhere sketchy and has chosen self-preservation.",
+            "ERR_UPLOAD_FILE_CHANGED":
+                "The file changed mid-upload. The dog suspects a shapeshifter.",
+            "ERR_UPLOAD_FILE_REJECTED":
+                "The upload was rejected. The dog is appealing to the treat tribunal.",
+            "ERR_NO_SUPPORTED_PROXIES":
+                "Chrome looked for a usable proxy and found a room full of unplugged boxes.",
+            "ERR_FAILED":
+                "Something failed. Extremely helpful, Chrome. Ten out of ten diagnostics.",
+            "ERR_UNEXPECTED":
+                "The dog encountered something unexpected. So did the developer.",
+            "ERR_NOT_IMPLEMENTED":
+                "This feature has not been implemented. The dog has filed a Jira ticket.",
+            "ERR_INVALID_ARGUMENT":
+                "Chrome received an argument so invalid it has requested a second opinion."
 
         };
 
